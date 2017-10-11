@@ -22,13 +22,63 @@
 			return img;
 		}
 
+		var BirdGame = function () {
+			var canvas = document.querySelector('#id-canvas');
+			var context = canvas.getContext('2d');
+
+			var g = {
+				keydowns: {},		// 存放每个key对应是否被按下的状态
+				actions: {},		// 存放每个key对应的注册函数（回调）
+				
+				registerActions: function(key, callback) {
+					this.actions[key] = callback;
+				},
+				drawImage: function(bird) {
+					context.drawImage(bird.image, bird.x, bird.y);
+				},
+			}
+
+			// events
+			window.addEventListener('keydown', function(event) {
+				g.keydowns[event.key] = true;
+			});
+
+			window.addEventListener('keyup', function(envet) {
+				g.keydowns[event.key] = false;
+			});
+
+			// timer
+			setInterval(function() {
+				var keys = Object.keys(g.actions);
+				for (var i = keys.length - 1; i >= 0; i--) {
+					var key = keys[i];
+					if (g.keydowns[key]) {
+						 // 如果按键被按下, 调用注册的 action
+						g.actions[key]();				
+					}
+				}
+				// update
+				g.update();
+
+				// clear
+				context.clearRect(0, 0, canvas.width, canvas.height);
+				
+				// draw
+				g.draw()
+				
+				
+			}, 1000/30);
+
+			return g;
+		}
+
 		var Bird = function() {
 			var image = imageFromPath('./img/bird.png');
 			var o = {
 				image: image,
 				x: 150,
 				y: 200,
-				speed: 6,
+				speed: 10,
 				moveLeft: function() {
 					this.x -= this.speed;
 				},
@@ -41,46 +91,25 @@
 		}
 
 		var __main = function() {
-			var canvas = document.querySelector('#id-canvas');
-			var context = canvas.getContext('2d');
-
+		
+			var game = BirdGame();
 			var bird = Bird();
 
-			var leftPress = false;
-			var rightPress = false;
-
-			// events
-			window.addEventListener('keydown', function(event) {
-				log('keydown')
-				// log(event)
-				var k = event.key;
-				if (k == 'a') {
-					leftPress = true;
-				} else if (k == 'd') {
-					rightPress = true;
-				}
+			game.registerActions('a', function() {
+				bird.moveLeft();
 			});
 
-			window.addEventListener('keyup', function(event) {
-				log('keyup')
-				// log(event)
-				var k = event.key;
-				if (k == 'a') {
-					leftPress = false;
-				} else if (k == 'd') {
-					rightPress = false;
-				}
+			game.registerActions('d', function() {
+				bird.moveRight();
 			});
 
-			setInterval(function() {
-				if (leftPress) {
-					bird.moveLeft();
-				} else if (rightPress) {
-					bird.moveRight();
-				}
-				context.clearRect(0, 0, canvas.width, canvas.height);
-				context.drawImage(bird.image, bird.x, bird.y);
-			}, 1000/30);
+			game.update = function() {
+
+			}
+
+			game.draw = function() {
+				game.drawImage(bird);
+			};
 		}
 
 		__main();
