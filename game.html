@@ -18,12 +18,31 @@
 		var canvas = document.querySelector('#id-canvas');
 		var context = canvas.getContext('2d');
 
+		var x = 150;
+		var y = 200;
 		var img = new Image();
 		img.src = './img/bird.png';
 		img.onload = function() {
-			context.drawImage(img, 150, 200);
+			context.drawImage(img, x, y);
 		}
 		
+
+		// events
+		window.addEventListener('keydown', function(event) {
+			// log(event)
+			var k = event.key;
+			// log(k)
+			if (k == 'a') {
+				x -= 10;
+				context.clearRect(0, 0, canvas.width, canvas.height);
+				context.drawImage(img, x, y);
+			} else if (k == 'd') {
+				x += 10;
+				context.clearRect(0, 0, canvas.width, canvas.height);
+				context.drawImage(img, x, y);
+			}
+		});
+
 	</script>
 </body>
 </html>
