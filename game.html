@@ -25,23 +25,44 @@
 		img.onload = function() {
 			context.drawImage(img, x, y);
 		}
-		
+
+
+		var leftPress = false;
+		var rightPress = false;
+		var speed = 6;
 
 		// events
 		window.addEventListener('keydown', function(event) {
+			log('keydown')
 			// log(event)
 			var k = event.key;
-			// log(k)
 			if (k == 'a') {
-				x -= 10;
-				context.clearRect(0, 0, canvas.width, canvas.height);
-				context.drawImage(img, x, y);
+				leftPress = true;
 			} else if (k == 'd') {
-				x += 10;
-				context.clearRect(0, 0, canvas.width, canvas.height);
-				context.drawImage(img, x, y);
+				rightPress = true;
 			}
 		});
+
+		window.addEventListener('keyup', function(event) {
+			log('keyup')
+			// log(event)
+			var k = event.key;
+			if (k == 'a') {
+				leftPress = false;
+			} else if (k == 'd') {
+				rightPress = false;
+			}
+		});
+
+		setInterval(function() {
+			if (leftPress) {
+				x -= speed;
+			} else if (rightPress) {
+				x += speed;
+			}
+			context.clearRect(0, 0, canvas.width, canvas.height);
+			context.drawImage(img, x, y);
+		}, 1000/30);
 
 	</script>
 </body>
