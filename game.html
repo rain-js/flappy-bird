@@ -15,54 +15,75 @@
 	<script>
 		var log = console.log.bind(console);
 
-		var canvas = document.querySelector('#id-canvas');
-		var context = canvas.getContext('2d');
+		var imageFromPath = function(path) {
+			var img = new Image();
+			img.src = path;
 
-		var x = 150;
-		var y = 200;
-		var img = new Image();
-		img.src = './img/bird.png';
-		img.onload = function() {
-			context.drawImage(img, x, y);
+			return img;
 		}
 
+		var Bird = function() {
+			var image = imageFromPath('./img/bird.png');
+			var o = {
+				image: image,
+				x: 150,
+				y: 200,
+				speed: 6,
+				moveLeft: function() {
+					this.x -= this.speed;
+				},
+				moveRight: function() {
+					this.x += this.speed;
+				}
+ 			}
 
-		var leftPress = false;
-		var rightPress = false;
-		var speed = 6;
+			return o;
+		}
 
-		// events
-		window.addEventListener('keydown', function(event) {
-			log('keydown')
-			// log(event)
-			var k = event.key;
-			if (k == 'a') {
-				leftPress = true;
-			} else if (k == 'd') {
-				rightPress = true;
-			}
-		});
+		var __main = function() {
+			var canvas = document.querySelector('#id-canvas');
+			var context = canvas.getContext('2d');
 
-		window.addEventListener('keyup', function(event) {
-			log('keyup')
-			// log(event)
-			var k = event.key;
-			if (k == 'a') {
-				leftPress = false;
-			} else if (k == 'd') {
-				rightPress = false;
-			}
-		});
+			var bird = Bird();
 
-		setInterval(function() {
-			if (leftPress) {
-				x -= speed;
-			} else if (rightPress) {
-				x += speed;
-			}
-			context.clearRect(0, 0, canvas.width, canvas.height);
-			context.drawImage(img, x, y);
-		}, 1000/30);
+			var leftPress = false;
+			var rightPress = false;
+
+			// events
+			window.addEventListener('keydown', function(event) {
+				log('keydown')
+				// log(event)
+				var k = event.key;
+				if (k == 'a') {
+					leftPress = true;
+				} else if (k == 'd') {
+					rightPress = true;
+				}
+			});
+
+			window.addEventListener('keyup', function(event) {
+				log('keyup')
+				// log(event)
+				var k = event.key;
+				if (k == 'a') {
+					leftPress = false;
+				} else if (k == 'd') {
+					rightPress = false;
+				}
+			});
+
+			setInterval(function() {
+				if (leftPress) {
+					bird.moveLeft();
+				} else if (rightPress) {
+					bird.moveRight();
+				}
+				context.clearRect(0, 0, canvas.width, canvas.height);
+				context.drawImage(bird.image, bird.x, bird.y);
+			}, 1000/30);
+		}
+
+		__main();
 
 	</script>
 </body>
