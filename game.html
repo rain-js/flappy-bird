@@ -67,7 +67,7 @@
 				g.draw()
 				
 				
-			}, 1000/30);
+			}, 1000/60);
 
 			return g;
 		}
@@ -78,18 +78,24 @@
 				image: image,
 				x: 100,
 				y: 420,
-				speed: 20,
+				speed: 10,
 				
 				moveLeft: function() {
 					this.x -= this.speed;
+					if (this.x < 0) {
+						this.x = 0;
+					}
 				},
 				moveRight: function() {
 					this.x += this.speed;
+					if (this.x + this.image.width > 300) {
+						this.x = 300 - this.image.width;
+					}
 				},
 				collide: function(ball) {
 					if (ball.y + ball.image.height > this.y) {
 						if (ball.x > this.x && ball.x < this.x + this.image.width) {
-							log('collide')
+							log('bird and ball collide')
 							return true;
 						}
 					}
@@ -106,8 +112,8 @@
 				image: image,
 				x: 100,
 				y: 100,
-				speedX: 10,
-				speedY: 10,
+				speedX: 5,
+				speedY: 5,
 				fired: false,
 
 				pause: function() {
@@ -131,6 +137,31 @@
 						this.y += this.speedY;
 					}
 				},
+				collide: function(block) {
+					if (block.y + block.image.height > this.y) {
+						if (block.x > this.x && block.x < this.x + this.image.width) {
+							log('ball and block collide')
+							return true;
+						}
+					}
+					return false;
+				},
+ 			}
+
+			return o;
+		};
+
+		var Block = function() {
+			var image = imageFromPath('./img/block.png');
+			var o = {
+				image: image,
+				x: 50,
+				y: 50,
+				alive: true,
+
+				kill: function() {
+					this.alive = false;
+				},
  			}
 
 			return o;
@@ -142,7 +173,14 @@
 			var game = BirdGame();
 			var bird = Bird();
 			var ball = Ball();
-
+			
+			var blocks = [];
+			for (var i = 0; i < 5; i++) {
+				var block = Block();
+				block.x *= i;
+				blocks.push(block);
+			}
+			
 			game.registerActions('a', function() {
 				bird.moveLeft();
 			});
@@ -160,15 +198,32 @@
 			});
 
 			game.update = function() {
+				// 挡板与球
 				if (bird.collide(ball)) {
 					ball.speedY = -ball.speedY;
 				}
 				ball.move();
+
+				// 球与砖块
+				for (var i = 0; i < 5; i++) {
+					if (blocks[i].alive && ball.collide(blocks[i])) {
+						blocks[i].kill();
+						ball.speedY = -ball.speedY;
+					}	
+				}
+				
 			}
 
 			game.draw = function() {
 				game.drawImage(ball);
 				game.drawImage(bird);
+
+				for (var i = 0; i < 5; i++) {
+					if (blocks[i].alive) {
+						game.drawImage(blocks[i]);					
+					}	
+				}
+				
 			};
 		}
 
