@@ -76,8 +76,8 @@
 			var image = imageFromPath('./img/bird.png');
 			var o = {
 				image: image,
-				x: 150,
-				y: 200,
+				x: 100,
+				y: 300,
 				speed: 10,
 				moveLeft: function() {
 					this.x -= this.speed;
@@ -94,12 +94,19 @@
 			var image = imageFromPath('./img/ball.png');
 			var o = {
 				image: image,
-				x: 200,
-				y: 350,
-				speed: 10,
+				x: 100,
+				y: 100,
+				speed: 5,
+				fired: false,
+
+				fire: function() {
+					this.fired = true;
+				},
 				move: function() {
-					log('move')
-				}
+					if (this.fired) {
+						log('move');	
+					}
+				},
  			}
 
 			return o;
@@ -119,6 +126,10 @@
 			game.registerActions('d', function() {
 				bird.moveRight();
 			});
+
+			game.registerActions('f', function() {
+				ball.fire();
+			})
 
 			game.update = function() {
 				ball.move();
