@@ -100,6 +100,10 @@
 				speedY: 10,
 				fired: false,
 
+				pause: function() {
+					log('let the ball pause');
+					this.fired = false;
+				},
 				fire: function() {
 					this.fired = true;
 				},
@@ -138,6 +142,10 @@
 
 			game.registerActions('f', function() {
 				ball.fire();
+			});
+
+			game.registerActions('p', function() {
+				ball.pause();
 			});
 
 			game.update = function() {
