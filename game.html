@@ -96,15 +96,24 @@
 				image: image,
 				x: 100,
 				y: 100,
-				speed: 5,
+				speedX: 10,
+				speedY: 10,
 				fired: false,
 
 				fire: function() {
 					this.fired = true;
 				},
 				move: function() {
+					// log(this.image.width)
 					if (this.fired) {
-						log('move');	
+						if (this.x < 0 || (this.x + this.image.width) > 300) {
+							this.speedX = -this.speedX;
+						}
+						if (this.y < 0 || (this.y + this.image.height) > 500) {
+							this.speedY = -this.speedY;
+						}
+						this.x += this.speedX;
+						this.y += this.speedY;
 					}
 				},
  			}
@@ -129,7 +138,7 @@
 
 			game.registerActions('f', function() {
 				ball.fire();
-			})
+			});
 
 			game.update = function() {
 				ball.move();
