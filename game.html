@@ -73,18 +73,28 @@
 		}
 
 		var Bird = function() {
-			var image = imageFromPath('./img/bird.png');
+			var image = imageFromPath('./img/flappyBird.png');
 			var o = {
 				image: image,
 				x: 100,
-				y: 300,
-				speed: 10,
+				y: 420,
+				speed: 20,
+				
 				moveLeft: function() {
 					this.x -= this.speed;
 				},
 				moveRight: function() {
 					this.x += this.speed;
-				}
+				},
+				collide: function(ball) {
+					if (ball.y + ball.image.height > this.y) {
+						if (ball.x > this.x && ball.x < this.x + this.image.width) {
+							log('collide')
+							return true;
+						}
+					}
+					return false;
+				},
  			}
 
 			return o;
@@ -105,6 +115,7 @@
 					this.fired = false;
 				},
 				fire: function() {
+					log('fire the ball');
 					this.fired = true;
 				},
 				move: function() {
@@ -149,6 +160,9 @@
 			});
 
 			game.update = function() {
+				if (bird.collide(ball)) {
+					ball.speedY = -ball.speedY;
+				}
 				ball.move();
 			}
 
