@@ -22,7 +22,7 @@
 			return img;
 		}
 
-		var BirdGame = function () {
+		var BirdGame = function (fps) {
 			var canvas = document.querySelector('#id-canvas');
 			var context = canvas.getContext('2d');
 
@@ -67,7 +67,7 @@
 				g.draw()
 				
 				
-			}, 1000/60);
+			}, 1000/fps);
 
 			return g;
 		}
@@ -146,6 +146,9 @@
 					}
 					return false;
 				},
+				bounce: function() {
+					this.speedY = -this.speedY;
+				}
  			}
 
 			return o;
@@ -170,7 +173,7 @@
 
 		var __main = function() {
 		
-			var game = BirdGame();
+			var game = BirdGame(60);
 			var bird = Bird();
 			var ball = Ball();
 			
@@ -200,15 +203,16 @@
 			game.update = function() {
 				// 挡板与球
 				if (bird.collide(ball)) {
-					ball.speedY = -ball.speedY;
+					ball.bounce();
 				}
 				ball.move();
 
 				// 球与砖块
 				for (var i = 0; i < 5; i++) {
+					// 砖块存在时再判断相撞
 					if (blocks[i].alive && ball.collide(blocks[i])) {
 						blocks[i].kill();
-						ball.speedY = -ball.speedY;
+						ball.bounce();
 					}	
 				}
 				
