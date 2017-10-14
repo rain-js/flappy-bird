@@ -1,9 +1,14 @@
 var Ball = function() {
 	var image = imageFromPath('./img/ball.png');
+	var width = image.width;
+	var height = image.height;
+
 	var o = {
 		image: image,
 		x: 100,
 		y: 100,
+		w: width,
+		h: height,
 		speedX: 5,
 		speedY: 5,
 		fired: false,
