@@ -20,15 +20,11 @@
 	<script src="level.js"></script>
 	<script>
 
-
-
-var __main = function() {
-
-	var game = BirdGame(60);
-	var bird = Bird();
-	var ball = Ball();
-	
-	var blocks = loadLevel(1);
+var blocks = [];
+var enableDebugMode = function(enable) {
+	if (!enable) {
+		return;
+	}
 
 	window.addEventListener('keydown', function(event) {
 		var k = event.key;
@@ -38,6 +34,16 @@ var __main = function() {
 			blocks = loadLevel(k);
 		}
 	});
+};
+
+var __main = function() {
+	enableDebugMode(true);
+	
+	var game = BirdGame(60);
+	var bird = Bird();
+	var ball = Ball();
+	
+	blocks = loadLevel(1);
 
 	game.registerActions('a', function() {
 		bird.moveLeft();
