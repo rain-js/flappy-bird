@@ -19,15 +19,9 @@ var Bird = function() {
 			}
 		},
 		collide: function(ball) {
-			if (ball.y + ball.image.height > this.y) {
-				if (ball.x > this.x && ball.x < this.x + this.image.width) {
-					log('bird and ball collide')
-					return true;
-				}
-			}
-			return false;
+			return rectIntersects(this, ball);
 		},
-		}
+	}
 
 	return o;
 }

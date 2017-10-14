@@ -30,13 +30,7 @@ var Ball = function() {
 			}
 		},
 		collide: function(block) {
-			if (block.y + block.image.height > this.y) {
-				if (block.x > this.x && block.x < this.x + this.image.width) {
-					log('ball and block collide')
-					return true;
-				}
-			}
-			return false;
+			return rectIntersects(this, block);
 		},
 		bounce: function() {
 			this.speedY = -this.speedY;
