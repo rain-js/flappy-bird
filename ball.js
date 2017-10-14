@@ -1,20 +1,18 @@
 var Ball = function() {
 	var image = imageFromPath('./img/ball.png');
-	var width = image.width;
-	var height = image.height;
 
 	var o = {
 		image: image,
 		x: 100,
 		y: 100,
-		w: width,
-		h: height,
+		w: 49,
+		h: 51,
 		speedX: 5,
 		speedY: 5,
 		fired: false,
 
 		pause: function() {
-			log('let the ball pause');
+			log('stop the ball');
 			this.fired = false;
 		},
 		fire: function() {
@@ -40,7 +38,7 @@ var Ball = function() {
 		bounce: function() {
 			this.speedY = -this.speedY;
 		}
-		}
+	}
 
 	return o;
 };

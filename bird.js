@@ -1,14 +1,12 @@
 var Bird = function() {
 	var image = imageFromPath('./img/flappyBird.png');
-	var width = image.width;
-	var height = image.height;
 
 	var o = {
 		image: image,
 		x: 100,
 		y: 420,
-		w: width,
-		h: height,
+		w: 61,
+		h: 61,
 		speed: 10,
 		
 		moveLeft: function() {

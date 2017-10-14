@@ -3,16 +3,14 @@ var log = console.log.bind(console);
 var imageFromPath = function(path) {
 	var img = new Image();
 	img.src = path;
-
 	return img;
 };
 
 var rectIntersects = function(a, b) {
-	if (b.y + b.image.height > a.y) {
-		if (b.x > a.x && b.x < a.x + a.image.width) {
-			log('ball and b collide')
-			return true;
-		}
+	// 两个矩形不相交的四种情况
+	if ((b.x + b.w < a.x) || (a.x + a.w < b.x) || (a.y + a.h < b.y) || (b.y + b.h < a.y)) {
+		return false;  // 无碰撞
+	} else {
+		return true;
 	}
-	return false;
 };
