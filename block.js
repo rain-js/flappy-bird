@@ -10,9 +10,13 @@ var Block = function(position) {
 		w: 40,
 		h: 19,
 		alive: true,
+		lifes: p[2] || 1,
 
 		kill: function() {
-			this.alive = false;
+			this.lifes--;
+			if (this.lifes < 1) {
+				this.alive = false;				
+			}
 		},
 	}
 
