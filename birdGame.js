@@ -3,6 +3,8 @@ var BirdGame = function () {
 	var context = canvas.getContext('2d');
 
 	var g = {
+		canvas: canvas,
+		context: context,
 		keydowns: {},		// 存放每个key对应是否被按下的状态
 		actions: {},		// 存放每个key对应的注册函数（回调）
 		

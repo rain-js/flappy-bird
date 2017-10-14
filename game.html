@@ -49,6 +49,7 @@ var __main = function() {
 	var game = BirdGame();
 	var bird = Bird();
 	var ball = Ball();
+	var score = 0;
 	
 	blocks = loadLevel(1);
 
@@ -81,6 +82,7 @@ var __main = function() {
 			if (blocks[i].alive && ball.collide(blocks[i])) {
 				blocks[i].kill();
 				ball.bounce();
+				score += 100;
 			}	
 		}
 		
@@ -95,6 +97,9 @@ var __main = function() {
 				game.drawImage(blocks[i]);		
 			}	
 		}
+
+		game.context.font = '18px serif';
+	 	game.context.fillText('Score：' + score, 10, 485);
 		
 	};
 }
