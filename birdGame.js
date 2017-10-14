@@ -1,4 +1,4 @@
-var BirdGame = function (fps) {
+var BirdGame = function () {
 	var canvas = document.querySelector('#id-canvas');
 	var context = canvas.getContext('2d');
 
@@ -23,8 +23,8 @@ var BirdGame = function (fps) {
 		g.keydowns[event.key] = false;
 	});
 
-	// timer
-	setInterval(function() {
+	window.fps = 30;
+	var runloop = function() {
 		var keys = Object.keys(g.actions);
 		for (var i = keys.length - 1; i >= 0; i--) {
 			var key = keys[i];
@@ -40,9 +40,15 @@ var BirdGame = function (fps) {
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		
 		// draw
-		g.draw()
-		
-		
+		g.draw();
+
+		setTimeout(function() {
+			runloop()
+		}, 1000/fps);
+	}
+	// timer
+	setTimeout(function() {
+		runloop()
 	}, 1000/fps);
 
 	return g;
