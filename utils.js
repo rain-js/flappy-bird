@@ -11,6 +11,7 @@ var rectIntersects = function(a, b) {
 	if ((b.x + b.w < a.x) || (a.x + a.w < b.x) || (a.y + a.h < b.y) || (b.y + b.h < a.y)) {
 		return false;  // 无碰撞
 	} else {
+		log('collide');
 		return true;
 	}
 };
