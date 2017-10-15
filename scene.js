@@ -25,8 +25,18 @@ var Scene = function(game) {
 		ball.pause();
 	});
 
+	var __startBounce = false;
+
 	s.update = function() {
-		if (bird.collide(ball)) {
+		// 当球开始反弹时，过多1s才检测碰撞
+		if (!__startBounce && bird.collide(ball)) {
+			__startBounce = true;
+			if (__startBounce) {
+				setTimeout(function() {
+					log('startBounce')
+					__startBounce = false;
+				}, 1000);
+			}
 			ball.bounce();
 		}
 		ball.move();
