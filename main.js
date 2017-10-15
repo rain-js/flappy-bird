@@ -79,4 +79,30 @@ var __main = function() {
 	 	game.context.fillText('Score：' + score, 10, 485);
 		
 	};
+
+	var enableDrag = false;
+	// mouse event
+	game.canvas.addEventListener('mousedown', function(event) {
+		log(event.offsetX, event.offsetY)
+
+		// 检查是否点中了ball
+		if (pointInRect(event.offsetX, event.offsetY, ball.x, ball.y, ball.w, ball.h)) {
+			// 设置拖拽状态
+			enableDrag = true;
+		}
+	});
+
+ 	game.canvas.addEventListener('mousemove', function(event) {
+ 		if (enableDrag) {
+ 			log('drag the ball');
+
+ 			ball.x = event.offsetX;
+ 			ball.y = event.offsetY;
+ 		}
+ 	});
+
+ 	game.canvas.addEventListener('mouseup', function(event) {
+ 		enableDrag = false;
+ 	})
+
 }
