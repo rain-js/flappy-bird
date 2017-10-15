@@ -31,6 +31,13 @@ var Scene = function(game) {
 		}
 		ball.move();
 
+		if (ball.y > bird.y + bird.h) {
+			log('game over....')
+			var end = SceneEnd(game);
+			s.game.replaceScene(end);
+			return;
+		}
+
 		// 球与砖块
 		for (var i = 0; i < blocks.length; i++) {
 			// 砖块存在时再判断相撞
@@ -80,6 +87,6 @@ var Scene = function(game) {
  	game.canvas.addEventListener('mouseup', function(event) {
  		enableDrag = false;
  	})
- 	
+
 	return s;
 }

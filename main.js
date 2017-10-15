@@ -32,5 +32,9 @@ var __main = function() {
 	game.draw = function() {
 		scene.draw();	
 	}
+
+	game.replaceScene = function(s) {
+		scene = s;
+	}
 	
 }

@@ -26,6 +26,7 @@ var BirdGame = function () {
 	});
 
 	window.fps = 30;
+
 	var runloop = function() {
 		var keys = Object.keys(g.actions);
 		for (var i = keys.length - 1; i >= 0; i--) {
@@ -52,6 +53,7 @@ var BirdGame = function () {
 	setTimeout(function() {
 		runloop()
 	}, 1000/fps);
+
 
 	return g;
 }
