@@ -4,7 +4,7 @@ var Ball = function() {
 	var o = {
 		image: image,
 		x: 100,
-		y: 100,
+		y: 200,
 		w: 49,
 		h: 51,
 		speedX: 5,
