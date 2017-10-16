@@ -1,8 +1,9 @@
-var BirdGame = function () {
+var BirdGame = function (images) {
 	var canvas = document.querySelector('#id-canvas');
 	var context = canvas.getContext('2d');
 
 	var g = {
+		images: images,
 		canvas: canvas,
 		context: context,
 		keydowns: {},		// 存放每个key对应是否被按下的状态

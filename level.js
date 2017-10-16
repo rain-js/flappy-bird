@@ -13,7 +13,7 @@ var levels = [
 	],
 ];
 
-var loadLevel = function(n) {
+var loadLevel = function(n, game) {
 	var n = n - 1;
 	var level = levels[n];
 	var blocks = [];
@@ -23,7 +23,7 @@ var loadLevel = function(n) {
 	}
 
 	for (var i = 0; i < level.length; i++) {
-		var block = Block(level[i]);
+		var block = Block(game, level[i]);
 		blocks.push(block);
 	}
 

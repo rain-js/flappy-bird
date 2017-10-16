@@ -1,12 +1,12 @@
-var Bird = function() {
-	var image = imageFromPath('./img/flappyBird.png');
+var Bird = function(game) {
+	var image = game.images['flappyBird'];
 
 	var o = {
 		image: image,
 		x: 100,
 		y: 420,
-		w: 61,
-		h: 61,
+		w: image.width,
+		h: image.height,
 		speed: 10,
 		
 		moveLeft: function() {

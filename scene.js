@@ -3,11 +3,11 @@ var Scene = function(game) {
 		game: game,
 	}
 
-	var bird = Bird();
-	var ball = Ball();
+	var bird = Bird(game);
+	var ball = Ball(game);
 	var score = 0;
 
-	blocks = loadLevel(1);
+	blocks = loadLevel(1, game);
 
 	s.game.registerActions('a', function() {
 		bird.moveLeft();

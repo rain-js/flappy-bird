@@ -1,40 +1,35 @@
 var blocks = [];
-var enableDebugMode = function(enable) {
-	if (!enable) {
-		return;
-	}
-
-	window.addEventListener('keydown', function(event) {
-		var k = event.key;
-
-		if ('123456789'.includes(k)) {
-			log(loadLevel(k))
-			blocks = loadLevel(k);
-		}
-	});
-
-	document.querySelector('#id-input-fps').addEventListener('input', function(event) {
-		// log(event.target)
-		log('fps = ' + window.fps);
-		window.fps = event.target.value;
-	});
-};
+var images = [];
+var game = null;
 
 var __main = function() {
-	enableDebugMode(true);
-	
-	var game = BirdGame();
-	var scene = Scene(game);
 
-	game.update = function() {
-	 	scene.update();		
-	}
-	game.draw = function() {
-		scene.draw();	
+	// 载入图片资源
+	var names = [
+		'ball',
+		'block',
+		'flappyBird',
+	];
+
+	for (var i = 0; i < names.length; i++ ) {
+		images[names[i]] = imageByName(names[i])
 	}
 
-	game.replaceScene = function(s) {
-		scene = s;
-	}
+	images[names[names.length - 1]].onload = function() {
+		enableDebugMode(true);
 	
+		game = BirdGame(images);
+		var scene = Scene(game);
+
+		game.update = function() {
+		 	scene.update();		
+		}
+		game.draw = function() {
+			scene.draw();	
+		}
+
+		game.replaceScene = function(s) {
+			scene = s;
+		}
+	}
 }
