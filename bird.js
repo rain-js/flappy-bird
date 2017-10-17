@@ -4,7 +4,7 @@ var Bird = function(game) {
 	var o = {
 		image: image,
 		x: 100,
-		y: 420,
+		y: 500 - image.height,
 		w: image.width,
 		h: image.height,
 		speed: 10,

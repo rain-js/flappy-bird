@@ -70,7 +70,7 @@ var Scene = function(game) {
 		}
 
 		game.context.font = '18px serif';
-	 	game.context.fillText('Score：' + score, 10, 485);
+	 	game.context.fillText('分数：' + score, 10, 20);
 	};
 
 		var enableDrag = false;
